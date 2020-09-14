@@ -1,44 +1,51 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h1 align="center">
+  Very useful tools to remember
+</h1>
 
-## Available Scripts
+<p align="center">
+  <a href="#rocket-technologies">Technologies</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
+  <a href="#memo-getting-started">Getting started</a>
+</p>
 
-In the project directory, you can run:
+## :rocket: Technologies
 
-### `yarn start`
+- **ReactJS** — A JavaScript library for building user interfaces.
+- **TypeScript** - An open-source language which builds on JavaScript and adds static type definitions.
+- **React Router DOM** - DOM bindings for React Router.
+- **React Icons** - A JavaScript library to include popular icons.
+- **Unform** - Easy peasy highly scalable ReactJS & React Native forms.
+- **Yup** - A JavaScript schema builder for value parsing and validation.
+- **Syled Components** - A JavaScript library that allows you to write CSS code within JavaScript.
+- **Axios** - Promise based HTTP client for the browser and node.js.
+- **Eslint** - Pluggable JavaScript linter.
+- **Prettier** - An opinionated code formatter.
+- **EditorConfig** - Helps maintain consistent coding styles for multiple developers working on the same project across various editors and IDEs.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## :memo: Getting started
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### Requirements
 
-### `yarn test`
+- [Node.js](https://nodejs.org/en/)
+- [Yarn](https://classic.yarnpkg.com/) or [npm](https://www.npmjs.com/)
+- [Vuttr-backend](https://github.com/greysonmrx/vuttr-backend) are running
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**Clone the project and access the folder**
 
-### `yarn build`
+```bash
+$ git clone https://github.com/greysonmrx/vuttr-frontend.git
+$ cd vuttr-frontend
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Follow the steps below**
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+```bash
+# Install the dependencies
+$ yarn
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+# Start the application
+$ yarn dev:server
 
-### `yarn eject`
+# Well done, project is started!
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Made with :hearts: by Greyson :wave: [See my linkedin](https://www.linkedin.com/in/greyson-mascarenhas-5a21ab1a2/)
