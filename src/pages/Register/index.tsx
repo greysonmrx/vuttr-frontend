@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
@@ -24,7 +24,11 @@ const Register: React.FC = () => {
 
   const formRef = useRef<FormHandles>(null);
 
+  const [loading, setLoading] = useState(false);
+
   async function handleSubmit(data: RegisterFormData) {
+    setLoading(true);
+
     try {
       formRef.current?.setErrors({});
 
@@ -47,8 +51,12 @@ const Register: React.FC = () => {
           'Congratulations! User successfully created. You can now login to VUTTR.',
       });
 
+      setLoading(false);
+
       history.push('/');
     } catch (err) {
+      setLoading(false);
+
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
 
@@ -89,7 +97,9 @@ const Register: React.FC = () => {
           placeholder="Enter your password"
           type="password"
         />
-        <Button type="submit">Register</Button>
+        <Button type="submit" loading={loading}>
+          Register
+        </Button>
       </Form>
       <Link to="/">Back to login</Link>
     </Container>

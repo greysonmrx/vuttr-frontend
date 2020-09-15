@@ -45,6 +45,8 @@ const Tools: React.FC = () => {
   const removeToolModalRef = useRef<ModalHandles>(null);
   const checkBoxRef = useRef<CheckBoxHandles>(null);
 
+  const [loading, setLoading] = useState(false);
+  const [loadingTools, setLoadingTools] = useState(false);
   const [currentTool, setCurrentTool] = useState<ITool>({} as ITool);
   const [tools, setTools] = useState<ITool[]>([]);
   const [pagination, setPagination] = useState<PaginationData>({
@@ -54,6 +56,8 @@ const Tools: React.FC = () => {
 
   const handleEditTool = useCallback(
     async (data: ToolFormData) => {
+      setLoading(true);
+
       try {
         editToolFormRef.current?.setErrors({});
 
@@ -83,8 +87,12 @@ const Tools: React.FC = () => {
           ),
         );
 
+        setLoading(false);
+
         editToolModalRef.current?.close();
       } catch (err) {
+        setLoading(false);
+
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
 
@@ -107,6 +115,8 @@ const Tools: React.FC = () => {
   );
 
   const handleRemoveTool = useCallback(async () => {
+    setLoading(true);
+
     try {
       await api.delete(`/tools/${currentTool?.id}`);
 
@@ -120,8 +130,11 @@ const Tools: React.FC = () => {
         oldState.filter(tool => tool.id !== currentTool?.id),
       );
 
+      setLoading(false);
       removeToolModalRef.current?.close();
     } catch (err) {
+      setLoading(false);
+
       addToast({
         type: 'error',
         title: 'An error just happened!',
@@ -136,6 +149,8 @@ const Tools: React.FC = () => {
 
   const handleCreateTool = useCallback(
     async (data: ToolFormData) => {
+      setLoading(true);
+
       try {
         createToolFormRef.current?.setErrors({});
 
@@ -159,8 +174,12 @@ const Tools: React.FC = () => {
           description: 'Congratulations! Tool successfully created.',
         });
 
+        setLoading(false);
+
         createToolModalRef.current?.close();
       } catch (err) {
+        setLoading(false);
+
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
 
@@ -184,6 +203,8 @@ const Tools: React.FC = () => {
 
   const handleFetchTools = useCallback(
     async (page: number, search?: string) => {
+      setLoadingTools(true);
+
       try {
         let url: string;
 
@@ -202,7 +223,10 @@ const Tools: React.FC = () => {
           current_page: response.data.current_page,
           total_pages: response.data.total_pages,
         });
+        setLoadingTools(false);
       } catch (err) {
+        setLoadingTools(false);
+
         addToast({
           type: 'error',
           title: 'An error just happened!',
@@ -240,7 +264,7 @@ const Tools: React.FC = () => {
               <h4>Very Useful Tools to Remember</h4>
             </div>
             <Link to="/profile">
-              {`${user.name.split(' ')[0]} ${user.name.split(' ')[1]}`}
+              {user.name}
               <img src={profileImg} alt="Perfil" />
             </Link>
           </header>
@@ -259,20 +283,24 @@ const Tools: React.FC = () => {
             </div>
           </Search>
           <ToolsList>
-            {tools.map(tool => (
-              <Tool
-                key={tool.id}
-                data={tool}
-                handleEdit={() => {
-                  setCurrentTool(tool);
-                  editToolModalRef.current?.open();
-                }}
-                handleRemove={() => {
-                  setCurrentTool(tool);
-                  removeToolModalRef.current?.open();
-                }}
-              />
-            ))}
+            {loadingTools ? (
+              <h5>Loading tools...</h5>
+            ) : (
+              tools.map(tool => (
+                <Tool
+                  key={tool.id}
+                  data={tool}
+                  handleEdit={() => {
+                    setCurrentTool(tool);
+                    editToolModalRef.current?.open();
+                  }}
+                  handleRemove={() => {
+                    setCurrentTool(tool);
+                    removeToolModalRef.current?.open();
+                  }}
+                />
+              ))
+            )}
           </ToolsList>
           {tools.length > 0 && (
             <Pagination data={pagination} handleGoToPage={handleSelectPage} />
@@ -289,7 +317,9 @@ const Tools: React.FC = () => {
             />
             <Input name="tags" placeholder="Tags" label="Tags" />
             <div>
-              <Button type="submit">Add tool</Button>
+              <Button type="submit" loading={loading}>
+                Add tool
+              </Button>
             </div>
           </Form>
         </Modal>
@@ -311,7 +341,9 @@ const Tools: React.FC = () => {
             />
             <Input name="tags" placeholder="Tags" label="Tags" />
             <div>
-              <Button type="submit">Edit tool</Button>
+              <Button type="submit" loading={loading}>
+                Edit tool
+              </Button>
             </div>
           </Form>
         </Modal>
@@ -326,7 +358,9 @@ const Tools: React.FC = () => {
             >
               Cancel
             </Button>
-            <Button onClick={handleRemoveTool}>Yes, remove</Button>
+            <Button onClick={handleRemoveTool} loading={loading}>
+              Yes, remove
+            </Button>
           </footer>
         </Modal>
       </Container>

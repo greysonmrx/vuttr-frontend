@@ -1,4 +1,4 @@
-import React, { useRef, useCallback } from 'react';
+import React, { useRef, useCallback, useState } from 'react';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
@@ -30,8 +30,12 @@ const Profile: React.FC = () => {
 
   const formRef = useRef<FormHandles>(null);
 
+  const [loading, setLoading] = useState(false);
+
   const handleEditProfile = useCallback(
     async (data: EditProfileFormData) => {
+      setLoading(true);
+
       try {
         formRef.current?.setErrors({});
 
@@ -62,7 +66,11 @@ const Profile: React.FC = () => {
           title: 'This was a complete success!',
           description: 'Congratulations! User successfully updated.',
         });
+
+        setLoading(false);
       } catch (err) {
+        setLoading(false);
+
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
 
@@ -117,7 +125,9 @@ const Profile: React.FC = () => {
             label="New password"
             type="password"
           />
-          <Button type="submit">Edit profile</Button>
+          <Button type="submit" loading={loading}>
+            Edit profile
+          </Button>
           <Button buttonType="secondary" onClick={signOut}>
             Sign out
           </Button>

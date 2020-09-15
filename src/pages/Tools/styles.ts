@@ -162,5 +162,13 @@ export const Search = styled.div`
 export const Input = styled(RNInput)``;
 
 export const ToolsList = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   margin: 30px 0;
+  align-items: center;
+
+  h5 {
+    margin-top: 100px;
+  }
 `;

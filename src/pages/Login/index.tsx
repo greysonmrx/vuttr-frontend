@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import * as Yup from 'yup';
 import { Link, useHistory } from 'react-router-dom';
 import { FormHandles } from '@unform/core';
@@ -24,7 +24,11 @@ const Login: React.FC = () => {
 
   const formRef = useRef<FormHandles>(null);
 
+  const [loading, setLoading] = useState(false);
+
   async function handleSubmit(data: LoginFormData) {
+    setLoading(true);
+
     try {
       formRef.current?.setErrors({});
 
@@ -39,8 +43,12 @@ const Login: React.FC = () => {
 
       await signIn(data);
 
+      setLoading(false);
+
       history.push('/tools');
     } catch (err) {
+      setLoading(false);
+
       if (err instanceof Yup.ValidationError) {
         const errors = getValidationErrors(err);
 
@@ -75,7 +83,9 @@ const Login: React.FC = () => {
           placeholder="Enter your password"
           type="password"
         />
-        <Button type="submit">Login</Button>
+        <Button type="submit" loading={loading}>
+          Login
+        </Button>
       </Form>
       <Link to="/register">Create new account</Link>
     </Container>
