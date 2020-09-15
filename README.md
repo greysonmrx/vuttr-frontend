@@ -29,7 +29,6 @@
 
 ### Requirements
 
-- [Node.js](https://nodejs.org/en/)
 - [Yarn](https://classic.yarnpkg.com/) or [npm](https://www.npmjs.com/)
 - [Vuttr-backend](https://github.com/greysonmrx/vuttr-backend) are running
 
@@ -47,7 +46,7 @@ $ cd vuttr-frontend
 $ yarn
 
 # Start the application
-$ yarn dev:server
+$ yarn start
 
 # Well done, project is started!
 ```
