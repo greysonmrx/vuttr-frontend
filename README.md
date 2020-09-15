@@ -46,7 +46,7 @@ $ cd vuttr-frontend
 $ yarn
 
 # Start the application
-$ yarn dev:server
+$ yarn start
 
 # Well done, project is started!
 ```
