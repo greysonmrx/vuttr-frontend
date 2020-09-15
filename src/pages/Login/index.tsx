@@ -68,7 +68,7 @@ const Login: React.FC = () => {
 
   return (
     <Container>
-      <h1>VUTTR - Frontend</h1>
+      <h1>VUTTR - Frontend 2</h1>
       <Form ref={formRef} onSubmit={handleSubmit}>
         <Input
           name="email"
