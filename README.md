@@ -8,7 +8,7 @@
 </p>
 
 <p align="center">
-  <img alt="Preview" src="./.github/vuttr-frontend.gif"/>
+  <img alt="Preview" src="./.github/vuttr-frontend"/>
 </p>
 
 ## :rocket: Technologies
