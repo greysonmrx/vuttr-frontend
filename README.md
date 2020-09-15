@@ -7,6 +7,10 @@
   <a href="#memo-getting-started">Getting started</a>
 </p>
 
+<p align="center">
+  <img src="./.github/vuttr-frontend.gif"/>
+</p>
+
 ## :rocket: Technologies
 
 - **ReactJS** — A JavaScript library for building user interfaces.

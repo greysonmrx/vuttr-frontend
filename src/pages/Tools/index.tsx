@@ -54,6 +54,44 @@ const Tools: React.FC = () => {
     total_pages: 0,
   });
 
+  const handleFetchTools = useCallback(
+    async (page: number, search?: string) => {
+      setLoadingTools(true);
+
+      try {
+        let url: string;
+
+        if (search) {
+          url = `/tools?page=${page}&${
+            checkBoxRef.current?.getValue() ? 'tag' : 'title'
+          }=${search}`;
+        } else {
+          url = `/tools?page=${page}`;
+        }
+
+        const response = await api.get(url);
+
+        setTools(response.data.tools);
+        setPagination({
+          current_page: response.data.current_page,
+          total_pages: response.data.total_pages,
+        });
+        setLoadingTools(false);
+      } catch (err) {
+        setLoadingTools(false);
+
+        addToast({
+          type: 'error',
+          title: 'An error just happened!',
+          description:
+            err.response?.data.message ||
+            'An error just happened during the request. Please try again.',
+        });
+      }
+    },
+    [addToast],
+  );
+
   const handleEditTool = useCallback(
     async (data: ToolFormData) => {
       setLoading(true);
@@ -168,6 +206,8 @@ const Tools: React.FC = () => {
           tags: data.tags.split(' '),
         });
 
+        handleFetchTools(1);
+
         addToast({
           type: 'success',
           title: 'This was a complete success!',
@@ -177,8 +217,10 @@ const Tools: React.FC = () => {
         setLoading(false);
 
         createToolModalRef.current?.close();
+        createToolFormRef.current?.reset();
       } catch (err) {
         setLoading(false);
+        createToolFormRef.current?.reset();
 
         if (err instanceof Yup.ValidationError) {
           const errors = getValidationErrors(err);
@@ -198,45 +240,7 @@ const Tools: React.FC = () => {
         createToolModalRef.current?.close();
       }
     },
-    [addToast],
-  );
-
-  const handleFetchTools = useCallback(
-    async (page: number, search?: string) => {
-      setLoadingTools(true);
-
-      try {
-        let url: string;
-
-        if (search) {
-          url = `/tools?page=${page}&${
-            checkBoxRef.current?.getValue() ? 'tag' : 'title'
-          }=${search}`;
-        } else {
-          url = `/tools?page=${page}`;
-        }
-
-        const response = await api.get(url);
-
-        setTools(response.data.tools);
-        setPagination({
-          current_page: response.data.current_page,
-          total_pages: response.data.total_pages,
-        });
-        setLoadingTools(false);
-      } catch (err) {
-        setLoadingTools(false);
-
-        addToast({
-          type: 'error',
-          title: 'An error just happened!',
-          description:
-            err.response?.data.message ||
-            'An error just happened during the request. Please try again.',
-        });
-      }
-    },
-    [addToast],
+    [addToast, handleFetchTools],
   );
 
   const handleSelectPage = useCallback(
